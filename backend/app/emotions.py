@@ -1,15 +1,16 @@
-import random
 from collections import Counter
 from enum import Enum, unique
 from os import PathLike
 from typing import Union, List
 
+import random
 import numpy as np
 import torch
 import torch.nn.functional as F
 from torch import nn
 
 from app.features import N_MELS
+from app.resources import load_emotion_fonts
 
 MODEL_PATH = 'models/emotions.pt'
 
@@ -38,31 +39,11 @@ class Emotion(Enum):
 
 
 EMOTIONS = [e.value for e in Emotion]
+EMOTION_FONTS = load_emotion_fonts()
 
 
-def get_emoji(emotion: str) -> str:
-    emoji = {
-        Emotion.COMFORTABLE.value: '😊',
-        Emotion.HAPPY.value: '😁',
-        Emotion.INSPIRATIONAL.value: '🤩',
-        Emotion.JOY.value: '😂',
-        Emotion.LONELY.value: '😟',
-        Emotion.FUNNY.value: '😆',
-        Emotion.NOSTALGIC.value: '🙄',
-        Emotion.PASSIONATE.value: '😍',
-        Emotion.QUIET.value: '🤐',
-        Emotion.RELAXED.value: '😌',
-        Emotion.ROMANTIC.value: '😘',
-        Emotion.SADNESS.value: '🙁',
-        Emotion.SOULFUL.value: '🙃',
-        Emotion.SWEET.value: '🤗',
-        Emotion.SERIOUS.value: '🤨',
-        Emotion.ANGER.value: '😡',
-        Emotion.WARY.value: '😑',
-        Emotion.SURPRISE.value: '😲',
-        Emotion.FEAR.value: '😱'
-    }
-    return emoji.get(emotion, '')
+def get_fonts(emotion: str) -> List[str]:
+    return random.choices(EMOTION_FONTS[emotion], k=5) if emotion in EMOTION_FONTS else []
 
 
 class EmotionClassifier(nn.Module):
