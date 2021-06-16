@@ -13,25 +13,9 @@
 
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
     <script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
-    <script>
-        function forwardHash(action) {
-            debugger;
-            const urlParams = new URLSearchParams(location.href);
-            const hash = urlParams.get('hash')
-            return action + '&hash=' + hash
-        }
-    </script>
-    <style type="text/css">
-       % for font in fonts:
-            @font-face {
-                font-family: "${font}";
-                src: url("https://tools.deflamel.com/content/fonts/${font}.ttf") format("truetype");
-            }
-       % endfor
-    </style>
     <style>
         .masonry {
-            column-count: 3;
+            column-count: 1;
             column-gap: 1em;
             margin-top: 50px;
         }
@@ -44,15 +28,9 @@
             padding: 1.5rem;
             margin: .5rem auto;
             width: 100%;
+            text-align: center;
         }
     </style>
-    <script>
-        function forwardHash(action) {
-            const urlParams = new URLSearchParams(location.href);
-            const hash = urlParams.get('hash')
-            return action + '&hash=' + hash
-        }
-    </script>
 </head>
 <body>
 <section>
@@ -74,32 +52,29 @@
         <div class="Center" style="padding-top: 150px; justify-content: flex-start;">
 
             <h1 class="Title">Music Keywords Suggestion</h1>
-            <p class="SubTitle">Get design ideas based on the song<br><br></p>
+            <p class="SubTitle">Get design ideas based on the song</p>
 
-            <form method='POST' enctype='multipart/form-data' action="/demo/music-keywords?step=4"
-                  onsubmit="this.action = forwardHash(this.action); this.submit(); return false;">
-                <div class="form-group">
-
-                    <h4>Choose the font which fits best</h4><br>
-                    <div class="masonry col-12">
-                        % for font in fonts:
-                            <div class="masonry-item">
-                                <div name="font_name" class="ImageUploader__Input-Label-Message"
-                                     style="margin-bottom: 1rem;">
-                                    ${font}
-                                </div>
-                                <p name="font_text" style="font-family: ${font}; font-size: 1.5rem;">${text_test}</p>
-                            </div>
-                            <input checked type="radio" name="font" value="${font}" class="Input__Input">
-                        % endfor
-                    </div>
-
-                    <input type='submit'
-                           class="Footer__NextButton Footer__NextButton--visible Footer__NextButton--active"
-                           value='Submit'/>
+            % if keywords_str is not null:
+            <div class="masonry col-12">
+                <h4 class="Title">Your song's keywords:</h4>
+                <div class="masonry-item">
+                    <p style="font-family: ${font}; font-size: 1.5rem;">${keywords_str}</p>
                 </div>
-            </form>
+            </div>
+            % endif
 
+            <form method='POST' enctype='multipart/form-data' action="/demo/music-keywords?step=1">
+                <div class="form-group">
+                    <div style="clear: both; margin: 20px 0 50px 0;">
+                        <label for="audio">Upload the song</label>
+                        <input type="file" id="audio" name="audio"
+                               accept="audio/*" class="Input__Input" required>
+                    </div>
+                </div>
+                <input type='submit'
+                       class="Footer__NextButton Footer__NextButton--visible Footer__NextButton--active"
+                       value='Submit'/>
+            </form>
         </div>
     </article>
 </section>
