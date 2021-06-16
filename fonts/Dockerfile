@@ -22,6 +22,7 @@ CMD cron
 
 COPY app/* /inference-api/app/
 COPY html/* /inference-api/html/
+COPY resources/* /inference-api/resources/
 COPY models/* /inference-api/models/
 COPY server.py /inference-api/server.py
 COPY ./config.yml /inference-api/config.yml
