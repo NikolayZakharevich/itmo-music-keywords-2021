@@ -70,7 +70,7 @@ def get_emoji(emotion: str) -> str:
     return emoji.get(emotion, '')
 
 
-def get_fonts(emotion: str) -> list[str]:
+def get_fonts(emotion: str) -> List[str]:
     return random.choices(EMOTION_FONTS[emotion], k=5) if emotion in EMOTION_FONTS else []
 
 
