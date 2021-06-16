@@ -27,7 +27,7 @@ ERROR_MESSAGE_INVALID_FEATURES = 'Invalid audio features found in file `%s`'
 
 process = psutil.Process(os.getpid())  # for monitoring and debugging purposes
 
-config = yaml.safe_load(open("config.yml"))
+config = yaml.safe_load(open('config.yml'))
 method_name = METHOD_NAME_DEFAULT
 
 

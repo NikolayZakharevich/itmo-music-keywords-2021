@@ -73,7 +73,7 @@ docker run --publish 8082:8080 music-fonts:Dockerfile
 
 ```yaml
 app:
-  port: 8083
+  port: 8080
   host: "0.0.0.0"
   thread_pool: 5
   tmp_dir: "tmp/"
