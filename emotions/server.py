@@ -14,10 +14,11 @@ from mako.lookup import TemplateLookup
 from app.emotions import predict_topk_emotions, get_emoji
 from app.features import extract_audio_features, save_audio_features, get_dump_path
 
+METHOD_NAME_DEFAULT = 'music-emotions'
+
 DIR_HTML = 'html'
 
-PAGE_STEP_1 = 'step1.html'
-PAGE_STEP_2 = 'step2.html'
+PAGE_STEP_1_2 = 'step1-2.html'
 
 ERROR_MESSAGE_NO_FILE_WITH_FEATURES = 'Invalid audio features path `%s`: no such file'
 ERROR_MESSAGE_INVALID_FEATURES = 'Invalid audio features found in file `%s`'
@@ -26,13 +27,12 @@ process = psutil.Process(os.getpid())  # for monitoring and debugging purposes
 
 config = yaml.safe_load(open("config.yml"))
 
-METHOD_NAME_DEFAULT = 'music-emotions'
 method_name = METHOD_NAME_DEFAULT
 
 
 class AppServerController(object):
     @cherrypy.expose(method_name)
-    def music_keywords(
+    def music_emotions(
             self,
             step: Optional[int] = None,
             audio: Optional[cherrypy._cpreqbody.Part] = None,
@@ -114,7 +114,8 @@ class AppServerController(object):
 
     @staticmethod
     def render_step1_page():
-        return AppServerController.render_page(PAGE_STEP_1)
+        page_params = {}
+        return AppServerController.render_page(PAGE_STEP_1_2, **page_params)
 
     @staticmethod
     def render_step2_page(emotions: List[str]):
@@ -122,7 +123,7 @@ class AppServerController(object):
         for i in range(len(emotions)):
             page_params[f'emotion_{i + 1}'] = emotions[i]
             page_params[f'emoji_{i + 1}'] = get_emoji(emotions[i])
-        return AppServerController.render_page(PAGE_STEP_2, **page_params)
+        return AppServerController.render_page(PAGE_STEP_1_2, **page_params)
 
     @staticmethod
     def render_page(page: str, **kwargs):
