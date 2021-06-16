@@ -117,36 +117,36 @@
             <form method='POST' enctype='multipart/form-data' action="/demo/${method_name}?step=3"
                   onsubmit="this.action = forwardHash(this.action); this.submit(); return false;">
 
-                % if emoji_1 is not null:
-                <h2>Did we catch the song mood?</h2><br>
-                <div class="MainSmileContainer">
-                    <div class="MainSmileAndNameContainer">
-                        <label for="emotion-1" class="emotion-label">${emoji_1}</label>
-                        <div class="MainSmileName">${emotion_1}<br>
-                            <input id="emotion-1" checked type="radio" name="emotion" value="${emotion_1}"
-                                   class="Input__Input emotion-radio"
-                                   onchange="onSelectEmotion()">
+                <#if emoji_1??>
+                    <h2>Did we catch the song mood?</h2><br>
+                    <div class="MainSmileContainer">
+                        <div class="MainSmileAndNameContainer">
+                            <label for="emotion-1" class="emotion-label">${emoji_1}</label>
+                            <div class="MainSmileName">${emotion_1}<br>
+                                <input id="emotion-1" checked type="radio" name="emotion" value="${emotion_1}"
+                                       class="Input__Input emotion-radio"
+                                       onchange="onSelectEmotion()">
+                            </div>
+                        </div>
+                        <div class="MainSmileAndNameContainer">
+                            <label for="emotion-2" class="emotion-label">${emoji_2}</label>
+                            <div class="MainSmileName">${emotion_2}<br>
+                                <input id="emotion-2" type="radio" name="emotion" value="${emotion_2}"
+                                       class="Input__Input emotion-radio"
+                                       onchange="onSelectEmotion()">
+                            </div>
+                        </div>
+                        <div class="MainSmileAndNameContainer">
+                            <label for="emotion-3" class="emotion-label">${emoji_3}</label>
+                            <div class="MainSmileName">${emotion_3}<br>
+                                <input id="emotion-3" type="radio" name="emotion" value="${emotion_3}"
+                                       class="Input__Input emotion-radio"
+                                       onchange="onSelectEmotion()">
+                            </div>
                         </div>
                     </div>
-                    <div class="MainSmileAndNameContainer">
-                        <label for="emotion-2" class="emotion-label">${emoji_2}</label>
-                        <div class="MainSmileName">${emotion_2}<br>
-                            <input id="emotion-2" type="radio" name="emotion" value="${emotion_2}"
-                                   class="Input__Input emotion-radio"
-                                   onchange="onSelectEmotion()">
-                        </div>
-                    </div>
-                    <div class="MainSmileAndNameContainer">
-                        <label for="emotion-3" class="emotion-label">${emoji_3}</label>
-                        <div class="MainSmileName">${emotion_3}<br>
-                            <input id="emotion-3" type="radio" name="emotion" value="${emotion_3}"
-                                   class="Input__Input emotion-radio"
-                                   onchange="onSelectEmotion()">
-                        </div>
-                    </div>
-                </div>
-                <br>
-                % endif
+                    <br>
+                <#else></#if>
 
 
                 <label for="emotionSelect"></label>
@@ -186,6 +186,7 @@
                        value="Submit"
                 >
             </form>
+        </div>
     </article>
 </section>
 </body>

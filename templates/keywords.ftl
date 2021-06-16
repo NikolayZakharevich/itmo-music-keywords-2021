@@ -54,14 +54,14 @@
             <h1 class="Title">Music Keywords Suggestion</h1>
             <p class="SubTitle">Get design ideas based on the song</p>
 
-            % if keywords_str is not null:
+            <#if keywords??>
             <div class="masonry col-12">
                 <h4 class="Title">Your song's keywords:</h4>
                 <div class="masonry-item">
                     <p style="font-family: ${font}; font-size: 1.5rem;">${keywords_str}</p>
                 </div>
             </div>
-            % endif
+            <#else></#if>
 
             <form method='POST' enctype='multipart/form-data' action="/demo/music-keywords?step=1">
                 <div class="form-group">

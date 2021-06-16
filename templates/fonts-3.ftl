@@ -22,12 +22,12 @@
         }
     </script>
     <style type="text/css">
-       % for font in fonts:
+        <#list fonts as font>
             @font-face {
                 font-family: "${font}";
                 src: url("https://tools.deflamel.com/content/fonts/${font}.ttf") format("truetype");
             }
-       % endfor
+        </#list>
     </style>
     <style>
         .masonry {
@@ -79,7 +79,7 @@
             <h2>Suggested fonts</h2><br>
             <div class="form-group">
                 <div class="masonry col-12">
-                    % for font in fonts:
+                    <#list fonts as font>
                     <div class="masonry-item">
                         <div name="font_name" class="ImageUploader__Input-Label-Message"
                              style="margin-bottom: 1rem;">
@@ -87,7 +87,7 @@
                         </div>
                         <p name="font_text" style="font-family: ${font}; font-size: 1.5rem;">${text_test}</p>
                     </div>
-                    % endfor
+                    </#list>
                 </div>
             </div>
 
