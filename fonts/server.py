@@ -49,7 +49,7 @@ class AppServerController(object):
         :param hash:           - part of file name with cached song features
         :param emotion:        - emotion selected by user (among predicted)
         :param emotion_custom: - emotion selected by user (custom)
-        :param text_test:      - text to present fonts
+        :param text_test:      - user's text to present fonts
         :return:
         """
         if isinstance(step, str):
@@ -58,10 +58,15 @@ class AppServerController(object):
         if step is None or step == 1:
             return self.step1_page(audio)
         elif step == 2:
+            if hash is None:
+                return self.redirect_to(1)
             return self.step2_page(hash)
         elif step == 3:
             if emotion is None:
                 emotion = emotion_custom
+
+            if emotion is None or text_test is None:
+                return self.redirect_to(1)
             return self.step3_page(emotion, text_test)
         else:
             return self.step1_page(audio)
@@ -76,7 +81,7 @@ class AppServerController(object):
         :return:
         """
         if audio is not None:
-            # Audio audio uploading
+            # Audio uploading
             audio_file_name_prefix = random.randrange(1048576)
             tmp_dir = config['app']['tmp_dir']
 
@@ -109,8 +114,9 @@ class AppServerController(object):
     def step3_page(self, emotion: str, text_test: str) -> str:
         """
         Step 3.
-        - After emotion selecting
+        - Displaying fonts
         :param emotion: emotion selected by user
+        :param text_test: user's text to present fonts
         :return:
         """
         fonts = get_fonts(emotion)
@@ -157,8 +163,11 @@ class AppServerController(object):
     @staticmethod
     def redirect_to(step: int, params: Optional[Dict] = None):
         if params is None:
-            params = {}
-        raise cherrypy.HTTPRedirect(f'{method_name}?step={step}&{urlencode(params)}')
+            params_str = ''
+        else:
+            params_str = f'&{urlencode(params)}'
+
+        raise cherrypy.HTTPRedirect(f'{method_name}?step={step}{params_str}')
 
 
 if __name__ == '__main__':

@@ -111,13 +111,14 @@
 
         <div class="Center" style="padding-top: 150px; justify-content: flex-start;">
 
-            <h1 class="Title">Music Keywords Suggestion</h1>
+            <h1 class="Title">Music Fonts Suggestion</h1>
             <p class="SubTitle">Get design ideas based on the song</p>
 
             <form method='POST' enctype='multipart/form-data' action="/demo/${method_name}?step=3"
                   onsubmit="this.action = forwardHash(this.action); this.submit(); return false;">
-                <h2>Did we catch the song mood?</h2><br>
 
+                % if emoji_1 is not null:
+                <h2>Did we catch the song mood?</h2><br>
                 <div class="MainSmileContainer">
                     <div class="MainSmileAndNameContainer">
                         <label for="emotion-1" class="emotion-label">${emoji_1}</label>
@@ -127,7 +128,6 @@
                                    onchange="onSelectEmotion()">
                         </div>
                     </div>
-
                     <div class="MainSmileAndNameContainer">
                         <label for="emotion-2" class="emotion-label">${emoji_2}</label>
                         <div class="MainSmileName">${emotion_2}<br>
@@ -136,8 +136,6 @@
                                    onchange="onSelectEmotion()">
                         </div>
                     </div>
-
-
                     <div class="MainSmileAndNameContainer">
                         <label for="emotion-3" class="emotion-label">${emoji_3}</label>
                         <div class="MainSmileName">${emotion_3}<br>
@@ -147,8 +145,9 @@
                         </div>
                     </div>
                 </div>
-
                 <br>
+                % endif
+
 
                 <label for="emotionSelect"></label>
                 <select required id="emotionSelect" name="emotion_custom" class="Select__Select emotion-select"

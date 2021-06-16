@@ -53,6 +53,8 @@ class AppServerController(object):
         if step is None or step == 1:
             return self.step1_page(audio)
         elif step == 2:
+            if hash is None:
+                return self.redirect_to(1)
             return self.step2_page(hash)
         else:
             return self.step1_page(audio)
@@ -67,7 +69,7 @@ class AppServerController(object):
         :return:
         """
         if audio is not None:
-            # Audio audio uploading
+            # Audio uploading
             audio_file_name_prefix = random.randrange(1048576)
             tmp_dir = config['app']['tmp_dir']
 
@@ -85,7 +87,7 @@ class AppServerController(object):
     def step2_page(self, hash: str) -> str:
         """
         Step 2.
-        - After font selecting
+        - Predicting and displaying keywords
         :param hash: part of file name with cached song features
         :return:
         """
@@ -128,8 +130,11 @@ class AppServerController(object):
     @staticmethod
     def redirect_to(step: int, params: Optional[Dict] = None):
         if params is None:
-            params = {}
-        raise cherrypy.HTTPRedirect(f'{method_name}?step={step}&{urlencode(params)}')
+            params_str = ''
+        else:
+            params_str = f'&{urlencode(params)}'
+
+        raise cherrypy.HTTPRedirect(f'{method_name}?step={step}{params_str}')
 
 
 if __name__ == '__main__':
