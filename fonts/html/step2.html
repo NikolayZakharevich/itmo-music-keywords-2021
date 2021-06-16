@@ -21,13 +21,49 @@
         }
 
         .emotion-radio {
-            width: 0.5em;
-            height: 0.5em;
+            width: 1.5em;
+            height: 1.5em;
         }
 
         .emotion-select {
             font-size: 24px;
             margin-bottom: 1rem;
+        }
+
+        .MainSmileContainer {
+            font-size: 3.0rem;
+            display: -webkit-flex;
+            display: flex;
+            width: 80%;
+            -webkit-justify-content: center;
+            justify-content: center
+        }
+
+        .MainSmileAndNameContainer {
+            display: -webkit-flex;
+            display: flex;
+            -webkit-flex-direction: column;
+            flex-direction: column;
+            width: 20%;
+            height: 40%;
+            margin: 10px 20px;
+            -webkit-justify-content: space-around;
+            justify-content: space-around;
+            -webkit-align-items: center;
+            align-items: center
+        }
+
+        .MainSmileAndNameContainer:hover {
+            cursor: pointer;
+            background: #c5d2f6;
+            border-radius: 5%
+        }
+
+        .MainSmileName {
+            text-align: center;
+            color: #818992;
+            font-size: 1.2rem;
+            padding-top: 1.2rem
         }
     </style>
     <script>
@@ -78,24 +114,40 @@
             <h1 class="Title">Music Keywords Suggestion</h1>
             <p class="SubTitle">Get design ideas based on the song</p>
 
-            <form method='POST' enctype='multipart/form-data' action="/demo/music-keywords?step=3"
+            <form method='POST' enctype='multipart/form-data' action="/demo/${method_name}?step=3"
                   onsubmit="this.action = forwardHash(this.action); this.submit(); return false;">
-                <h4>Did we catch the song mood?</h4><br>
-                <label class="emotion-label">
-                    ${emoji_1}
-                    <input checked type="radio" name="emotion" value="${emotion_1}" class="Input__Input emotion-radio"
-                           onchange="onSelectEmotion()">
-                </label>
-                <label class="emotion-label">
-                    ${emoji_2}
-                    <input type="radio" name="emotion" value="${emotion_2}" class="Input__Input emotion-radio"
-                           onchange="onSelectEmotion()">
-                </label>
-                <label class="emotion-label">
-                    ${emoji_3}
-                    <input type="radio" name="emotion" value="${emotion_3}" class="Input__Input emotion-radio"
-                           onchange="onSelectEmotion()">
-                </label>
+                <h2>Did we catch the song mood?</h2><br>
+
+                <div class="MainSmileContainer">
+                    <div class="MainSmileAndNameContainer">
+                        <label for="emotion-1" class="emotion-label">${emoji_1}</label>
+                        <div class="MainSmileName">${emotion_1}<br>
+                            <input id="emotion-1" checked type="radio" name="emotion" value="${emotion_1}"
+                                   class="Input__Input emotion-radio"
+                                   onchange="onSelectEmotion()">
+                        </div>
+                    </div>
+
+                    <div class="MainSmileAndNameContainer">
+                        <label for="emotion-2" class="emotion-label">${emoji_2}</label>
+                        <div class="MainSmileName">${emotion_2}<br>
+                            <input id="emotion-2" type="radio" name="emotion" value="${emotion_2}"
+                                   class="Input__Input emotion-radio"
+                                   onchange="onSelectEmotion()">
+                        </div>
+                    </div>
+
+
+                    <div class="MainSmileAndNameContainer">
+                        <label for="emotion-3" class="emotion-label">${emoji_3}</label>
+                        <div class="MainSmileName">${emotion_3}<br>
+                            <input id="emotion-3" type="radio" name="emotion" value="${emotion_3}"
+                                   class="Input__Input emotion-radio"
+                                   onchange="onSelectEmotion()">
+                        </div>
+                    </div>
+                </div>
+
                 <br>
 
                 <label for="emotionSelect"></label>

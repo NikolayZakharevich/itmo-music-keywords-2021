@@ -76,28 +76,32 @@
             <h1 class="Title">Music Keywords Suggestion</h1>
             <p class="SubTitle">Get design ideas based on the song<br><br></p>
 
-            <form method='POST' enctype='multipart/form-data' action="/demo/music-keywords?step=4"
-                  onsubmit="this.action = forwardHash(this.action); this.submit(); return false;">
-                <div class="form-group">
-
-                    <h4>Choose the font which fits best</h4><br>
-                    <div class="masonry col-12">
-                        % for font in fonts:
-                            <div class="masonry-item">
-                                <div name="font_name" class="ImageUploader__Input-Label-Message"
-                                     style="margin-bottom: 1rem;">
-                                    ${font}
-                                </div>
-                                <p name="font_text" style="font-family: ${font}; font-size: 1.5rem;">${text_test}</p>
-                            </div>
-                            <input checked type="radio" name="font" value="${font}" class="Input__Input">
-                        % endfor
+            <h2>Suggested fonts</h2><br>
+            <div class="form-group">
+                <div class="masonry col-12">
+                    % for font in fonts:
+                    <div class="masonry-item">
+                        <div name="font_name" class="ImageUploader__Input-Label-Message"
+                             style="margin-bottom: 1rem;">
+                            ${font}
+                        </div>
+                        <p name="font_text" style="font-family: ${font}; font-size: 1.5rem;">${text_test}</p>
                     </div>
-
-                    <input type='submit'
-                           class="Footer__NextButton Footer__NextButton--visible Footer__NextButton--active"
-                           value='Submit'/>
+                    % endfor
                 </div>
+            </div>
+
+            <form method='POST' enctype='multipart/form-data' action="/demo/${method_name}?step=1">
+                <div class="form-group">
+                    <div style="clear: both; margin: 20px 0 50px 0;">
+                        <label for="audio">Upload the song</label>
+                        <input type="file" id="audio" name="audio"
+                               accept="audio/*" class="Input__Input" required>
+                    </div>
+                </div>
+                <input type='submit'
+                       class="Footer__NextButton Footer__NextButton--visible Footer__NextButton--active"
+                       value='Submit'/>
             </form>
 
         </div>

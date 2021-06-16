@@ -136,7 +136,7 @@ class AppServerController(object):
     def redirect_to(step: int, params: Optional[Dict] = None):
         if params is None:
             params = {}
-        raise cherrypy.HTTPRedirect(f'{METHOD_NAME_DEFAULT}?step={step}&{urlencode(params)}')
+        raise cherrypy.HTTPRedirect(f'{method_name}?step={step}&{urlencode(params)}')
 
 
 if __name__ == '__main__':
