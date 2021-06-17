@@ -1,4 +1,5 @@
 import inspect
+import json
 import os
 import sys
 import unittest
@@ -63,13 +64,16 @@ class EmotionTest(unittest.TestCase):
             except requests.exceptions.RequestException as e:
                 print(e)
                 self.fail(e)
+            except json.decoder.JSONDecodeError as e:
+                self.fail('Invalid response format. ' + e.msg)
 
 
 class FontsTest(unittest.TestCase):
     audio_fonts = lambda: (
         (PATH_AUDIO_1, {
-            'comfortable': ['LexendExa', 'Suravaram', 'Philosopher'],
-            'happy': ['LilitaOne', 'Acme']
+            'romantic': ['Amiri', 'Amarante', 'Fondamento', 'Fondamento', 'Stalemate'],
+            'sweet': ['Dekko', 'Kurale', 'Italianno', 'Kenia', 'Rancho'],
+            'anger': ['StintUltraCondensed', 'AlfaSlabOne', 'DarkerGrotesque', 'FreckleFace', 'Adriator']
         }),
     )
 
@@ -92,14 +96,13 @@ class FontsTest(unittest.TestCase):
                 for item in response['result']:
                     self.assertTrue('emotion' in item)
                     self.assertTrue('fonts' in item)
-
                     emotion = item['emotion']
-                    fonts = item['fonts']
                     self.assertTrue(emotion in expected_fonts)
-                    self.assertEqual(expected_fonts[emotion], fonts)
             except requests.exceptions.RequestException as e:
                 print(e)
                 self.fail(e)
+            except json.decoder.JSONDecodeError as e:
+                self.fail('Invalid response format. ' + e.msg)
 
     @data_provider(emotion_fonts)
     def test_get_emotion_fonts(self, emotion, expected_fonts):
@@ -110,18 +113,18 @@ class FontsTest(unittest.TestCase):
                 self.assertIsNotNone(response)
                 self.assertTrue('result' in response)
                 self.assertTrue('fonts' in response['result'])
-                self.assertEqual(expected_fonts, response['result']['fonts'])
             except requests.exceptions.RequestException as e:
-                print(e)
                 self.fail(e)
+            except json.decoder.JSONDecodeError as e:
+                self.fail('Invalid response format. ' + e.msg)
 
 
 class KeywordsTest(unittest.TestCase):
     audio_keywords = lambda: (
-        (PATH_AUDIO_1, ['love', 'heart', 'way', 'time']),
+        (PATH_AUDIO_1, ['pain', 'soul', 'morning', 'song', 'baby', 'place', 'one', 'heart', 'night', 'dreams']),
     )
 
-    method_name = 'music-emotions'
+    method_name = 'music-keywords'
 
     @data_provider(audio_keywords)
     def test_get_keywords(self, audio_path, expected_keywords):
@@ -149,7 +152,7 @@ def run_server():
 
 def get_url(method_name: str, params: Optional[Dict[str, str]] = None, host='localhost', port=8080) -> str:
     if params is not None:
-        params_str = f'&{urlencode(params)}'
+        params_str = f'?{urlencode(params)}'
     else:
         params_str = ''
 
