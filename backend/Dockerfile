@@ -20,8 +20,8 @@ RUN chmod 0644 /etc/cron.d/gc-cron
 RUN apt-get -y install cron
 CMD cron
 
-COPY backend/app/* /inference-api/app/
-COPY html/* /inference-api/html/
+COPY app/* /inference-api/app/
+COPY resources/* /inference-api/resources/
 COPY models/* /inference-api/models/
 COPY server.py /inference-api/server.py
 COPY config.yml /inference-api/config.yml
