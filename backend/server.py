@@ -72,6 +72,7 @@ class ApiServerController(object):
     @cherrypy.expose(METHOD_NAME_KEYWORDS)
     def music_keywords(self, audio: TypeAudio):
         """
+        curl -F "audio=@/home/user/audio.flac" "http://localhost:8080/music-keywords"
         :param audio: audio file with music song
         """
         features = get_audio_features(audio)
@@ -151,7 +152,7 @@ def result_keywords(keywords: List[str]) -> str:
 
 
 if __name__ == '__main__':
-    cherrypy.tree.mount(ApiServerController(), '/demo')
+    cherrypy.tree.mount(ApiServerController(), '/')
 
     cherrypy.config.update({
         'server.socket_port': config['app']['port'],
